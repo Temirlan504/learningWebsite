@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.views.generic.list import ListView
+from .models import Course
 
-def index(request):
-    return render(request, "myApp/index.html")
+class CourseListView(ListView):
+    model = Course
+    template_name = "myApp/index.html"
+    context_object_name = "courses"
