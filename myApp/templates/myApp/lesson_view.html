@@ -1,0 +1,9 @@
+{% extends 'myApp/layout.html' %}
+{% block body %}
+    <h1>Lessons</h1>
+    {% for lesson in lessons %}
+        <a href="#">
+            <h2 style="display: inline; margin-right: 30px;">{{ lesson.lesson_name }}</h2>
+        </a>
+    {% endfor %}
+{% endblock %}
