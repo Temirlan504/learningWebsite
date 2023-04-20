@@ -1,8 +1,9 @@
 {% extends 'myApp/layout.html' %}
 {% block body %}
-    <h1>Lessons</h1>
+    <h1>{{ course_name }} course</h1>
+    <h3>LessonView</h3>
     {% for lesson in lessons %}
-        <a href="#">
+        <a href="{% url 'myApp:lesson-detail' course_name lesson.lesson_name %}">
             <h2 style="display: inline; margin-right: 30px;">{{ lesson.lesson_name }}</h2>
         </a>
     {% endfor %}
