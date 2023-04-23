@@ -1,4 +1,22 @@
 {% extends 'myApp/layout.html' %}
 {% block body %}
-    <h1>{{ lesson_name }}</h1>
+    <h1 style="margin-left: 50px;">{{ lesson_name }}</h1>
+    {% for article in articles %}
+        <div class="article-{{article.pk}}" style="margin: 10px 200px 0 200px;">
+            <p>{{ article.paragraph|linebreaksbr|add:' '|safe }}</p>
+        </div>
+    {% endfor %}
+
+    {% for question in questions %}
+        <div class="question-div" id="question-{{question.pk}}" style="margin: 10px 200px 0 200px;">
+            <form>
+                <span>{{ question.question_name }}</span>
+                {% for answer in question.answer_set.all %}
+                    <input type="radio" id="{{ answer.pk }}" name="answer">
+                    <label for="answer{{ answer.pk }}">{{answer.answer_name}}</label>
+                {% endfor %}
+                <input type="submit" value="Check">
+            </form>
+        </div>
+    {% endfor %}
 {% endblock %}

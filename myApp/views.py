@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from .models import Course, Lesson
+from .models import Course, Lesson, Article, Question, Answer
 
 class CourseListView(ListView):
     model = Course
@@ -35,5 +35,9 @@ class LessonDetailView(DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        lesson = self.object
         context["lesson_name"] = self.kwargs['lesson_name']
+        # lesson.article_set.all() retrieves all the articles related to the current lesson.
+        context["articles"] = lesson.article_set.all() # Lesson specific articles
+        context["questions"] = lesson.question_set.all()
         return context
