@@ -1,4 +1,42 @@
 {% extends 'myApp/layout.html' %}
 {% block body %}
+
     <h1>{{ lesson_name }}</h1>
+    {% for article in articles %}
+        <div class="article-div" id="article-{{article.pk}}" style="display: none;">
+            <p>{{ article.paragraph|linebreaksbr|add:' '|safe }}</p>
+        </div>
+    {% endfor %}
+
+    {% for question in questions %}
+        <div class="question-div" id="question-{{question.pk}}" style="display: none;">
+            <form>
+                <span>{{ question.question_name }}</span><br>
+                {% for answer in question.answer_set.all %}
+                    <input type="radio" id="{{ answer.pk }}" name="answer">
+                    <label for="answer{{ answer.pk }}">{{answer.answer_name}}</label><br>
+                {% endfor %}
+                <input type="submit" value="Check">
+            </form>
+        </div>
+    {% endfor %}
+
+    <button id="show-div" onclick="showDiv()" style="display: block;">Continue</button>
+
+    <script>
+        function showDiv() {
+            let articleDivs = document.querySelectorAll('.article-div');
+            for (let i = 0; i < articleDivs.length; i++) {
+                if (articleDivs[i].style.display === "none") {
+                    articleDivs[i].style.display = "block";
+                    return; // exit the function as soon as an article is shown
+                }
+            }
+            
+            // If we get here, all the article-div elements have been shown
+            let questionDivs = document.querySelectorAll('.question-div');
+            questionDivs[0].style.display = "block";
+            document.getElementById('show-div').style.display = "none";
+        }
+    </script>
 {% endblock %}
